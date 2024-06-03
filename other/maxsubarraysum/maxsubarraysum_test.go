@@ -1,4 +1,4 @@
-// package maxsubarraysum
+package maxsubarraysum
 
 // import (
 // 	"testing"
