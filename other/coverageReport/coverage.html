@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>maxsubarraysum: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/TheAlgorithms/Go/other/maxsubarraysum/maxsubarraysum.go (0.0%)</option>
+				
+				<option value="file1">github.com/TheAlgorithms/Go/other/nested/nestedbrackets.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">/* O(n) solution, for calculating
+maximum contiguous sum in the given array. */
+
+// Package maxsubarraysum is a package containing a solution to a common
+// problem of finding max contiguous sum within a array of ints.
+package maxsubarraysum
+
+import (
+        "github.com/TheAlgorithms/Go/math/max"
+)
+
+// MaxSubarraySum returns the maximum subarray sum
+func MaxSubarraySum(array []int) int <span class="cov0" title="0">{
+        var currentMax int
+        var maxTillNow int
+        if len(array) != 0 </span><span class="cov0" title="0">{
+                currentMax = array[0]
+                maxTillNow = array[0]
+        }</span>
+        <span class="cov0" title="0">for _, v := range array </span><span class="cov0" title="0">{
+                currentMax = max.Int(v, currentMax+v)
+                maxTillNow = max.Int(maxTillNow, currentMax)
+        }</span>
+        <span class="cov0" title="0">return maxTillNow</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">// Package nested provides functions for testing
+// strings proper brackets nesting.
+package nested
+
+// IsBalanced returns true if provided input string is properly nested.
+//
+// Input is a sequence of brackets: '(', ')', '[', ']', '{', '}'.
+//
+// A sequence of brackets `s` is considered properly nested
+// if any of the following conditions are true:
+//   - `s` is empty;
+//   - `s` has the form (U) or [U] or {U} where U is a properly nested string;
+//   - `s` has the form VW where V and W are properly nested strings.
+//
+// For example, the string "()()[()]" is properly nested but "[(()]" is not.
+//
+// **Note** Providing characters other then brackets would return false,
+// despite brackets sequence in the string. Make sure to filter
+// input before usage.
+func IsBalanced(input string) bool <span class="cov8" title="1">{
+        if len(input) == 0 </span><span class="cov8" title="1">{
+                return true
+        }</span>
+
+        <span class="cov8" title="1">if len(input)%2 != 0 </span><span class="cov8" title="1">{
+                return false
+        }</span>
+
+        // Brackets such as '{', '[', '(' are valid UTF-8 characters,
+        // which means that only one byte is required to code them,
+        // so can be stored as bytes.
+        <span class="cov8" title="1">var stack []byte
+
+        for i := 0; i &lt; len(input); i++ </span><span class="cov8" title="1">{
+                if input[i] == '(' || input[i] == '{' || input[i] == '[' </span><span class="cov8" title="1">{
+                        stack = append(stack, input[i])
+                }</span> else<span class="cov8" title="1"> {
+                        if len(stack) &gt; 0 </span><span class="cov8" title="1">{
+                                pair := string(stack[len(stack)-1]) + string(input[i])
+                                stack = stack[:len(stack)-1]
+
+                                if pair != "[]" &amp;&amp; pair != "{}" &amp;&amp; pair != "()" </span><span class="cov8" title="1">{
+                                        // This means that two types of brackets has
+                                        // been mixed together, for example "([)]",
+                                        // which makes seuqence invalid by definition.
+                                        return false
+                                }</span>
+                        } else<span class="cov8" title="1"> {
+                                // This means that closing bracket is encountered
+                                // before opening one, which makes all sequence
+                                // invalid by definition.
+                                return false
+                        }</span>
+                }
+        }
+
+        // If sequence is properly nested, all elements in stack
+        // has been paired with closing elements. If even one
+        // element has not been paired with a closing bracket,
+        // means that sequence is invalid by definition.
+        <span class="cov8" title="1">return len(stack) == 0</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
