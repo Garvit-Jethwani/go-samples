@@ -1,0 +1,53 @@
+name: Generate test using RoostGPT
+
+on:
+  pull_request: # Trigger the workflow on a pull request
+
+env:
+  ROOST_TOKEN: ${{ secrets.ROOST_TOKEN }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  VERTEX_BEARER_TOKEN: ${{ secrets.VERTEX_BEARER_TOKEN }}
+  AZURE_OPENAI_KEY: ${{ secrets.AZURE_OPENAI_KEY }}
+  JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+  AZURE_TOKEN: ${{ secrets.AZURE_TOKEN }}
+  LOG_ELASTICSEARCH_TOKEN: ${{ secrets.LOG_ELASTICSEARCH_TOKEN }}
+  LOG_ELASTICSEARCH_API_KEY: ${{ secrets.LOG_ELASTICSEARCH_API_KEY }}
+  CLAUDE_AI_API_KEY: ${{ secrets.CLAUDE_AI_API_KEY }}
+  DBRX_AUTH_TOKEN: ${{ secrets.DBRX_AUTH_TOKEN }}
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        run: echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+
+      - name: Pull Docker image
+        run: docker pull zbio/roostgpt-cli:latest
+
+      - name: Run the container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspaces" \
+            -v "${{ github.workspace }}/config:/roost/config" \
+            -e ROOST_TOKEN="${{ secrets.ROOST_TOKEN }}" \
+            -e OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            -e GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}" \
+            -e VERTEX_BEARER_TOKEN="${{ secrets.VERTEX_BEARER_TOKEN }}" \
+            -e AZURE_OPENAI_KEY="${{ secrets.AZURE_OPENAI_KEY }}" \
+            -e JIRA_TOKEN="${{ secrets.JIRA_TOKEN }}" \
+            -e AZURE_TOKEN="${{ secrets.AZURE_TOKEN }}" \
+            -e LOG_ELASTICSEARCH_TOKEN="${{ secrets.LOG_ELASTICSEARCH_TOKEN }}" \
+            -e LOG_ELASTICSEARCH_API_KEY="${{ secrets.LOG_ELASTICSEARCH_API_KEY }}" \
+            -e CLAUDE_AI_API_KEY="${{ secrets.CLAUDE_AI_API_KEY }}" \
+            -e DBRX_AUTH_TOKEN="${{ secrets.DBRX_AUTH_TOKEN }}" \
+            zbio/roostgpt-cli:latest
+
+        shell: bash
