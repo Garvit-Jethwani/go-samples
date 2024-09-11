@@ -89,16 +89,15 @@ Read our [Contribution Guidelines](CONTRIBUTING.md) before you contribute.
 
 ##### Functions:
 
-1. [`NewLRU`](./cache/lru.go#L22): NewLRU represent initiate lru cache with capacity
-2. [`NewLFU`](./cache/lfu.go#L33): NewLFU represent initiate lfu cache with capacity
-3. [`Get`](./cache/lfu.go#L52): Get the value by key from LFU cache
-4. [`Put`](./cache/lfu.go#L66): Put the key and value in LFU cache
+1. [`NewLFU`](./cache/lfu.go#L33):  NewLFU init the LFU cache with capacity
+2. [`NewLRU`](./cache/lru.go#L23):  NewLRU represent initiate lru cache with capacity
 
 ---
 ##### Types
 
-1. [`LRU`](./cache/lru.go#L15): Default the struct of lru cache algorithm.
-2. [`LFU`](./cache/lfu.go#L19): Default the struct of lfu cache algorithm.
+1. [`LFU`](./cache/lfu.go#L19): No description provided.
+
+2. [`LRU`](./cache/lru.go#L15): No description provided.
 
 
 ---
@@ -342,6 +341,25 @@ Read our [Contribution Guidelines](CONTRIBUTING.md) before you contribute.
 1. [`Iterative`](./math/factorial/factorial.go#L12):  Iterative returns the iteratively brute forced factorial of n
 2. [`Recursive`](./math/factorial/factorial.go#L21):  Recursive This function recursively computes the factorial of a number
 3. [`UsingTree`](./math/factorial/factorial.go#L30):  UsingTree This function finds the factorial of a number using a binary tree
+
+---
+</details><details>
+	<summary> <strong> fenwicktree </strong> </summary>	
+
+---
+
+#####  Fenwick Tree Data Structure for efficient range queries on an array of integers. Also known as Binary Indexed Tree. It can query the sum of any range of the array and can update the array at a specific position by adding a value to it (point update). Build: O(N) Query: O(log(N)) Update: O(log(N)) reference: https://brilliant.org/wiki/fenwick-tree/
+
+---
+##### Functions:
+
+1. [`NewFenwickTree`](./structure/fenwicktree/fenwicktree.go#L20):  NewFenwickTree creates a new Fenwick tree, initializes bit with the values of the array. Note that the queries and updates should have one based indexing.
+
+---
+##### Types
+
+1. [`FenwickTree`](./structure/fenwicktree/fenwicktree.go#L11): No description provided.
+
 
 ---
 </details><details>
@@ -987,9 +1005,12 @@ Read our [Contribution Guidelines](CONTRIBUTING.md) before you contribute.
 
 ---
 
+#####  Segment Tree Data Structure for efficient range queries on an array of integers. It can query the sum and update the elements to a new value of any range of the array. Build: O(n*log(n)) Query: O(log(n)) Update: O(log(n)) reference: https://cp-algorithms.com/data_structures/segment_tree.html
+
+---
 ##### Functions:
 
-1. [`NewSegmentTree`](./structure/segmenttree/segmenttree.go#L116): No description provided.
+1. [`NewSegmentTree`](./structure/segmenttree/segmenttree.go#L117):  NewSegmentTree returns a new instance of a SegmentTree. It takes an input array of integers representing Array, initializes and builds the SegmentTree.
 
 ---
 ##### Types
@@ -1056,6 +1077,7 @@ Read our [Contribution Guidelines](CONTRIBUTING.md) before you contribute.
 23. [`Selection`](./sort/selectionsort.go#L5): No description provided.
 24. [`Shell`](./sort/shellsort.go#L5): No description provided.
 25. [`Simple`](./sort/simplesort.go#L13): No description provided.
+26. [`Timsort`](./sort/timsort.go#L13):  Timsort is a simple generic implementation of Timsort algorithm.
 
 ---
 ##### Types
