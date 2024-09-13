@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Log in to Docker Hub
         env:
@@ -29,7 +31,7 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
 
-      - name: Pull Docker image
+      - name: Pull specific Docker image
         run: docker pull zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
 
       - name: Set permissions for workspace
@@ -55,4 +57,38 @@ jobs:
             -e DBRX_AUTH_TOKEN="${{ secrets.DBRX_AUTH_TOKEN }}" \
             zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
 
-        shell: bash
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          git fetch origin
+          
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          if [ "$BRANCH_NAME" = "HEAD" ]; then
+            BRANCH_NAME=${GITHUB_HEAD_REF}
+          fi
+          
+          # Get list of new files
+          NEW_FILES=$(git ls-files --others --exclude-standard)
+          
+          # Filter out empty files and add non-empty ones
+          for file in $NEW_FILES; do
+            if [ -s "$file" ]; then
+              git add "$file"
+              echo "Added new non-empty file: $file"
+            else
+              echo "Skipped empty file: $file"
+            fi
+          done
+          
+          # Commit and push if there are any changes
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Add generated test files"
+            git push origin HEAD:${BRANCH_NAME}
+            echo "Pushed changes to $BRANCH_NAME"
+          else
+            echo "No new non-empty files to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
