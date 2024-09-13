@@ -4,7 +4,7 @@ on:
   pull_request: # Trigger the workflow on a pull request
 
 env:
-  ROOST_TOKEN: ${{ secrets.TOKEN }}
+  ROOST_TOKEN: ${{ secrets.ROOST_TOKEN }}
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   VERTEX_BEARER_TOKEN: ${{ secrets.VERTEX_BEARER_TOKEN }}
