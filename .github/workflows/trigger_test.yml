@@ -1,7 +1,7 @@
 name: Generate test using RoostGPT
 
 on:
-  pull_request: # Trigger the workflow on a pull request
+  pull_request:
 
 env:
   ROOST_TOKEN: ${{ secrets.ROOST_TOKEN }}
@@ -31,6 +31,11 @@ jobs:
 
       - name: Pull Docker image
         run: docker pull zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
+
+      - name: Set permissions for workspace
+        run: |
+          sudo chown -R 1000:1000 ${{ github.workspace }}
+          sudo chmod -R 777 ${{ github.workspace }}
 
       - name: Run the container
         run: |
