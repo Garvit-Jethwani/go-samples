@@ -19,7 +19,7 @@ Read our [Contribution Guidelines](CONTRIBUTING.md) before you contribute.
 
 <details>
 	<summary> <strong> ahocorasick </strong> </summary>	
-ass
+
 ---
 
 ##### Functions:
