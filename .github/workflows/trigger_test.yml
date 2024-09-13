@@ -34,7 +34,7 @@ jobs:
 
       - name: Run the container
         run: |
-          docker run --rm \
+          sudo docker run --rm \
             -v "${{ github.workspace }}:/workspaces" \
             -v "${{ github.workspace }}/config:/roost/config" \
             -e ROOST_TOKEN="${{ secrets.ROOST_TOKEN }}" \
