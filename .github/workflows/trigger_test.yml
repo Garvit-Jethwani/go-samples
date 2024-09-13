@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Log in to Docker Hub
         env:
@@ -29,7 +31,7 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
 
-      - name: Pull Docker image
+      - name: Pull specific Docker image
         run: docker pull zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
 
       - name: Set permissions for workspace
@@ -55,4 +57,44 @@ jobs:
             -e DBRX_AUTH_TOKEN="${{ secrets.DBRX_AUTH_TOKEN }}" \
             zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
 
-        shell: bash
+      - name: Debug - List workspace contents
+        run: |
+          echo "Workspace contents:"
+          ls -R ${{ github.workspace }}
+
+      - name: Debug - Check for new or modified files
+        run: |
+          echo "New or modified files:"
+          git status --porcelain
+
+      - name: Commit and push changes
+        run: |
+          # Configure git
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Fetch all branches
+          git fetch origin
+          
+          # Get the current branch name
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          if [ "$BRANCH_NAME" = "HEAD" ]; then
+            # We're in detached HEAD state, so let's get the PR branch name
+            BRANCH_NAME=${GITHUB_HEAD_REF}
+          fi
+          
+          # Check if there are any changes
+          if [ -n "$(git status --porcelain)" ]; then
+            # Add all changes
+            git add -A
+            
+            # Commit changes
+            git commit -m "Add generated test files"
+            
+            # Push changes
+            git push origin HEAD:${BRANCH_NAME}
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
