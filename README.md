@@ -1,4 +1,4 @@
-# The Algorithms - Go
+# The Algorithms - Goaa
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod&style=flat-square)](https://gitpod.io/#https://github.com/TheAlgorithms/Go)&nbsp;
 [![Continuous Integration](https://github.com/TheAlgorithms/Go/actions/workflows/ci.yml/badge.svg)](https://github.com/TheAlgorithms/Go/actions/workflows/ci.yml)
 ![godocmd](https://github.com/tjgurwara99/Go/workflows/godocmd/badge.svg)
