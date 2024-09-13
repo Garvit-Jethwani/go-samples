@@ -1,0 +1,12 @@
+mode: set
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:19.38,24.2 4 1
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:26.37,30.34 4 1
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:36.2,36.13 1 1
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:30.34,32.41 2 1
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:32.41,34.4 1 1
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:39.46,43.2 3 0
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:45.77,46.18 1 0
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:49.2,49.34 1 0
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:52.2,54.55 3 0
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:46.18,48.3 1 0
+github.com/TheAlgorithms/Go/strings/palindrome/ispalindrome.go:49.34,51.3 1 0
