@@ -30,7 +30,7 @@ jobs:
         run: echo "${DOCKERHUB_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
 
       - name: Pull Docker image
-        run: docker pull zbio/roostgpt-cli:latest
+        run: docker pull zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
 
       - name: Run the container
         run: |
@@ -48,6 +48,6 @@ jobs:
             -e LOG_ELASTICSEARCH_API_KEY="${{ secrets.LOG_ELASTICSEARCH_API_KEY }}" \
             -e CLAUDE_AI_API_KEY="${{ secrets.CLAUDE_AI_API_KEY }}" \
             -e DBRX_AUTH_TOKEN="${{ secrets.DBRX_AUTH_TOKEN }}" \
-            zbio/roostgpt-cli:latest
+            zbio/roostgpt-cli:4d820683822923a29fa7902fdff30dff461b9f46
 
         shell: bash
